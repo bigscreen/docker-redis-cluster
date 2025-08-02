@@ -10,9 +10,9 @@ env:
   # - REDIS_VERSION=4.0.14
   # - REDIS_VERSION=5.0.12
   # - REDIS_VERSION=6.0.20
-  - REDIS_VERSION=6.2.14
-  - REDIS_VERSION=7.0.15
-  - REDIS_VERSION=7.2.5
-  - REDIS_VERSION=7.4-rc1
-script:
-  docker build --build-arg redis_version=$REDIS_VERSION -t grokzen/redis-cluster .
+  # - REDIS_VERSION=6.2.14
+  # - REDIS_VERSION=7.0.15
+  # - REDIS_VERSION=7.2.5
+  # - REDIS_VERSION=7.4-rc1
+  - REDIS_VERSION=8.0.2
+script: docker build --build-arg redis_version=$REDIS_VERSION -t bigscreen/redis-cluster .

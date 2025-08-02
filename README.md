@@ -1,13 +1,12 @@
 # docker-redis-cluster
 
-[![Docker Stars](https://img.shields.io/docker/stars/grokzen/redis-cluster.svg)](https://hub.docker.com/r/grokzen/redis-cluster/)
+<!-- [![Docker Stars](https://img.shields.io/docker/stars/grokzen/redis-cluster.svg)](https://hub.docker.com/r/grokzen/redis-cluster/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/grokzen/redis-cluster.svg)](https://hub.docker.com/r/grokzen/redis-cluster/)
-[![Build Status](https://travis-ci.org/Grokzen/docker-redis-cluster.svg?branch=master)](https://travis-ci.org/Grokzen/docker-redis-cluster)
+[![Build Status](https://travis-ci.org/Grokzen/docker-redis-cluster.svg?branch=master)](https://travis-ci.org/Grokzen/docker-redis-cluster) -->
 
 Docker image with redis built and installed from source and a cluster is built.
 
-To find all redis-server releases see them here https://github.com/antirez/redis/releases
-
+To find all redis-server releases see them here https://github.com/redis/redis/releases
 
 ## Discussions, help, guides
 
@@ -17,12 +16,11 @@ Becuase we now have this feature, the issues feature will NOT be a place where y
 
 What can you expect to find in there?
 
- - A place where you can freely ask any question regarding this repo.
- - Ask questions like `how do i do X?`
- - General help with problems with this repo
- - Guides written by me or any other contributer with useful examples and ansers to commonly asked questions and how to resolve thos problems.
- - Approved answers to questions marked and promoted by me if help is provided by the community regarding some questions
-
+- A place where you can freely ask any question regarding this repo.
+- Ask questions like `how do i do X?`
+- General help with problems with this repo
+- Guides written by me or any other contributer with useful examples and ansers to commonly asked questions and how to resolve thos problems.
+- Approved answers to questions marked and promoted by me if help is provided by the community regarding some questions
 
 ## What this repo and container IS
 
@@ -32,7 +30,6 @@ I also aim to have every single release of redis that supports a cluster availab
 
 I personally use this to develop redis cluster client code https://github.com/Grokzen/redis-py-cluster
 
-
 ## What this repo and container IS NOT
 
 This container that i have built is not supposed to be some kind of production container or one that is used within any environment other than running locally on your machine. It is not ment to be run on kubernetes or in any other prod/stage/test/dev environment as a fully working commponent in that environment. If that works for you and your use-case then awesome. But this container will not change to fit any other primary solution than to be used locally on your machine.
@@ -40,7 +37,6 @@ This container that i have built is not supposed to be some kind of production c
 If you are looking for something else or some production quality or kubernetes compatible solution then you are looking in the wrong repo. There is other projects or forks of this repo that is compatible for that situation/solution.
 
 For all other purposes other than what has been stated you are free to fork and/or rebuild this container using it as a template for what you need.
-
 
 ## Redis major version support and docker.hub availability
 
@@ -50,17 +46,13 @@ Moving forward when a new major release is shipped out, at the first minor relea
 
 This major version schema support follows the same major version support that redis itself use.
 
-
 ## Redis instances inside the container
 
 The cluster is 6 redis instances running with 3 master & 3 slaves, one slave for each master. They run on ports 7000 to 7005.
 
 If the flag `-e "SENTINEL=true"` is passed there are 3 Sentinel nodes running on ports 5000 to 5002 matching cluster's master instances.
 
-
 This image requires at least `Docker` version 1.10 but the latest version is recommended.
-
-
 
 # Important for Mac users
 
@@ -79,8 +71,6 @@ If you are downloading the container from dockerhub, you must add the internal I
 ```
 docker run -e "IP=0.0.0.0" -p 7000-7005:7000-7005 grokzen/redis-cluster:latest
 ```
-
-
 
 # Usage
 
@@ -116,7 +106,6 @@ and it will run the build step on all versions that starts with 6.0.
 
 The only other optional usefull argument is `--cpu=N` and it will set how many paralell processes will be used. By default you will use n - 1 number of cpu cores that is available on your system. Commands like pull and push aare not very cpu intensive so using a higher number here might speed things up if you have good network bandwidth.
 
-
 ## Makefile (legacy)
 
 Makefile still has a few docker-compose commands that can be used
@@ -141,7 +130,6 @@ Or the built redis-cli tool inside the container that will connect to the cluste
 
     make cli
 
-
 ## Include sentinel instances
 
 Sentinel instances is not enabled by default.
@@ -157,16 +145,15 @@ When running with docker-compose set the environment variable on your system `RE
       environment:
         SENTINEL: 'true'
 
-
 ## Change number of nodes
 
 Be default, it is going to launch 3 masters with 1 slave per master. This is configurable through a number of environment variables:
 
 | Environment variable | Default |
-| -------------------- |--------:|
+| -------------------- | ------: |
 | `INITIAL_PORT`       |    7000 |
 | `MASTERS`            |       3 |
-| `SLAVES_PER_MASTER`  |       1 | 
+| `SLAVES_PER_MASTER`  |       1 |
 
 Therefore, the total number of nodes (`NODES`) is going to be `$MASTERS * ( $SLAVES_PER_MASTER  + 1 )` and ports are going to range from `$INITIAL_PORT` to `$INITIAL_PORT + NODES - 1`.
 
@@ -182,7 +169,6 @@ Also note that the number of sentinels (if enabled) is the same as the number of
         INITIAL_PORT: 9000,
         MASTERS: 2,
         SLAVES_PER_MASTER: 2
-
 
 ## IPv6 support
 
@@ -200,11 +186,9 @@ Unfortunately Docker does not handle IPv6 NAT so, when acceptable, `--network ho
     # Example using plain docker
     docker run -e "IP=::1" -e "BIND_ADDRESS=::" --network host grokzen/redis-cluster:latest
 
-
 ## Build alternative redis versions
 
 For a release to be buildable it needs to be present at this url: http://download.redis.io/releases/
-
 
 ### docker build
 
@@ -213,7 +197,6 @@ To build a different redis version use the argument `--build-arg` argument.
     # Example plain docker
     docker build --build-arg redis_version=6.0.11 -t grokzen/redis-cluster .
 
-
 ### docker-compose
 
 To build a different redis version use the `--build-arg` argument.
@@ -221,100 +204,30 @@ To build a different redis version use the `--build-arg` argument.
     # Example docker-compose
     docker-compose build --build-arg "redis_version=6.0.11" redis-cluster
 
-
-
 # Available tags
 
 The following tags with pre-built images is available on `docker-hub`.
 
 Latest release in the most recent stable branch will be used as `latest` version.
 
-- latest == 7.2.5
+- latest == 8.0.2
 
-Redis 7.4-rc1 version:
+Redis 8.0.x version:
 
-- 7.4-rc1
-
-Redis 7.2.x version:
-
-- 7.2.5
-- 7.2.4
-- 7.2.3
-- 7.2.2
-- 7.2.1
-- 7.2.0
-
-Redis 7.0.x version:
-
-- 7.0.15
-- 7.0.14
-- 7.0.13
-- 7.0.12
-- 7.0.11
-- 7.0.10
-- 7.0.9
-- 7.0.8
-- 7.0.7
-- 7.0.6
-- 7.0.5
-- 7.0.4
-- 7.0.3
-- 7.0.2
-- 7.0.1
-- 7.0.0
-
-Redis 6.2.x versions:
-
-- 6.2.14
-- 6.2.13
-- 6.2.12
-- 6.2.11
-- 6.2.10
-- 6.2.9
-- 6.2.8
-- 6.2.7
-- 6.2.6
-- 6.2.5
-- 6.2.4
-- 6.2.3
-- 6.2.2
-- 6.2.1
-- 6.2.0
-
-Redis 6.0.x versions:
-
-- 6.0.20
-- 6.0.19
-- 6.0.18
-- 6.0.17
-- 6.0.16
-- 6.0.15
-- 6.0.14
-- 6.0.13
-- 6.0.12
-- 6.0.11
-- 6.0.10
-- 6.0.9
-- 6.0.8
-- 6.0.7
-- 6.0.6
-- 6.0.5
-- 6.0.4
-- 6.0.3
-- 6.0.2
-- 6.0.1
-- 6.0.0
-
+- 8.0.2
 
 ## Unavailable major versions
 
-The following major versions is no longer available to be downloaded from docker.hub. You can still build and run them directly from this repo.
+The following major versions are not available to be downloaded from docker.hub.
 
+- 7.2.x
+- 7.0.x
+- 6.2.x
+- 6.0.x
 - 5.0
 - 4.0
 - 3.2
 - 3.0
-
 
 # License
 
